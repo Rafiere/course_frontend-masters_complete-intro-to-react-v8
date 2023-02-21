@@ -1,0 +1,20 @@
+{
+  "extends": [
+    /* O "eslint:recommended" contém apenas as configurações recomendadas do ESLint, ou seja, as configurações que apenas acusarão erros do JS, sem forçar nenhum estilo de código, como a configuração do AirBNB faz, por exemplo. */
+    "eslint:recommended",
+    "prettier"
+  ],
+  "plugins": [],
+  "parserOptions": {
+    "ecmaVersion": 2022,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "env": {
+    "es6": true,
+    "browser": true,
+    "node": true
+  }
+}
