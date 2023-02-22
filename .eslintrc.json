@@ -1,10 +1,27 @@
+/* Esse padrão do ESLint não força nenhum tipo de codestyle, apenas exibe erros quando algo realmente não está de acordo com a sintaxe da linguagem ou poderá causar erros quando a aplicação for executada. Esse padrão não se preocupa, por exemplo, com nomes de variáveis. */
+
 {
   "extends": [
-    /* O "eslint:recommended" contém apenas as configurações recomendadas do ESLint, ou seja, as configurações que apenas acusarão erros do JS, sem forçar nenhum estilo de código, como a configuração do AirBNB faz, por exemplo. */
+    /* O "eslint:recommended" contém apenas as configurações recomendadas do ESLint, ou seja, as configurações que apenas acusarão erros do JS, sem forçar nenhum estilo de código, como a configuração do AirBNB faz, por exemplo. O "prettier" sempre deve ser o último. */
+
+    /* Os plugins adicionam funcionalidades extras para o ESLint, assim, estamos, por exemplo, adicionando plugins que fazem o ESLint reconhecer o JSX. */
     "eslint:recommended",
+    "plugin:import/errors",
+    "plugin:react/recommended",
+    "plugin:jsx-a11y/recomended",
     "prettier"
   ],
-  "plugins": [],
+  "rules": {
+    /* O valor "0" significa "desativado", o valor "1" significa "warn" e o valor "2" significa "error". */
+
+    /* Não utilizaremos o PropTypes, pois ele é uma forma antiga de validarmos tipos sem o uso do TS. */
+    "react/prop-types": 0,
+    /* A partir do React 17, o "React" não precisa mais estar importado para utilizarmos o "JSX", por isso, essa regra foi desativada. */
+    "react/react-in-jsx-scope": 0
+  },
+
+  /* O plugin de "import" permite que o ESLint siga imports e identifique erros entre "imports" e "exports". */
+  "plugins": ["react", "import", "jsx-a11y"],
   "parserOptions": {
     "ecmaVersion": 2022,
     "sourceType": "module",
@@ -16,5 +33,17 @@
     "es6": true,
     "browser": true,
     "node": true
+  },
+  "settings": {
+    /* O ESLint quer saber a versão do React que estamos utilizando, dessa forma, ao utilizarmos o "detect", estamos informando que o ESLint deverá verificar a versão do React no "package.json". */
+    "react": {
+      "version": "detect"
+    },
+    "import/resolver": {
+      "node": {
+        /* Estamos configurando o ESLint para procurar imports em arquivos ".js" e ".jsx". */
+        "extensions": [".js", ".jsx"]
+      }
+    }
   }
 }
