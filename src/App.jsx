@@ -20,6 +20,8 @@ import SearchParams from "./SearchParams";
 //   ]);
 // };
 
+/* A aplicação no modo de desenvolvimento é cerca de 4x maior do que a aplicação no modo de produção. */
+
 const App = () => {
   return (
     <div>
