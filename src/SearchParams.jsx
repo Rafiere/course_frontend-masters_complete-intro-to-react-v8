@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import Pet from "./Pet";
+import Results from "./Results";
+import useBreedList from "./useBreedList";
 
 const ANIMALS = ["bird", "cat"];
 const BREEDS = [];
@@ -12,6 +13,10 @@ const SearchParams = () => {
   const [location, setLocation] = useState("");
   const [animal, setAnimal] = useState("");
   const [breed, setBreed] = useState("");
+
+  /* Esse hook customizado serve para obter as raças de cada animal de acordo com o estado "animal", assim, se o animal for um "dog", ele passará esse valor para o hook e obterá apenas as raças de "dog". */
+
+  const [breeds] = useBreedList(animal);
 
   /* Um "effect" é, basicamente, algo que acontecerá fora do componente. Ele serve para executarmos tarefas fora do ciclo de vida do componente. A maioria das vezes que esse hook é utilizado, é para realizar requisições de APIs. Ele também pode ser utilizado para acessar o local storage, salvar algo na API, salvar algo no local storage e etc. */
 
@@ -58,40 +63,45 @@ const SearchParams = () => {
             value={animal}
             onChange={(e) => {
               setAnimal(e.target.value);
+              setBreed("");
             }}
           >
             <option />
             {ANIMALS.map((animal) => {
-              return <option key={animal}>{animal}</option>;
+              return (
+                <option key={animal} value={animal}>
+                  {animal}
+                </option>
+              );
             })}
           </select>
         </label>
         <label htmlFor="breed">
-          Animal
+          Breed
           <select
             id="breed"
-            disabled={BREEDS.length === 0}
+            disabled={breeds.length === 0}
             value={breed}
             onChange={(e) => {
               setBreed(e.target.value);
             }}
+            onBlur={(e) => {
+              setBreed(e.target.value);
+            }}
           >
             <option />
-            {BREEDS.map((breed) => {
-              return <option key={breed}>{breed}</option>;
+            {breeds.map((breed) => {
+              return (
+                <option key={breed} value={breed}>
+                  {breed}
+                </option>
+              );
             })}
           </select>
         </label>
         <button>Submit</button>
       </form>
-      {pets.map((pet) => (
-        <Pet
-          key={pet.id}
-          name={pet.name}
-          animal={pet.animal}
-          breed={pet.breed}
-        />
-      ))}
+      <Results pets={pets} />
     </div>
   );
 };
